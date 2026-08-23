@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Performance Report — SmartPitch</title>
+    <meta name="description" content="Generate a professional player performance PDF report using the 4-Corner Model.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <a href="index.html" class="header-brand">
+            <img src="smartpitch-logo.jpg" alt="SmartPitch" style="width:26px;height:26px;object-fit:contain;border-radius:4px;">
+            <span>SmartPitch</span>
+        </a>
+        <nav class="header-nav">
+            <a href="index.html">Home</a>
+            <a href="player-report.html" class="active">Player Report</a>
+            <a href="match-report.html">Match Report</a>
+        </nav>
+    </header>
+
+    <!-- Loading Overlay -->
+    <div class="generating-overlay" id="loadingOverlay">
+        <div class="generating-box">
+            <div class="spinner"></div>
+            <h3>Generating Your Report</h3>
+            <p>Building your professional PDF, please wait...</p>
+        </div>
+    </div>
+
+    <main class="report-main">
+        <div class="report-container">
+            <h1 class="page-title">Player Performance Report</h1>
+            <p class="page-subtitle">Fill in the player's details below. Click Generate to instantly download a professional PDF.</p>
+
+            <form id="playerForm" novalidate>
+
+                <!-- Section 1: Player Vitals -->
+                <div class="form-card">
+                    <h2><span class="section-icon">👤</span> Player Vitals &amp; Basic Information</h2>
+
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label for="player_name">Player Name <span style="color:#EF4444">*</span></label>
+                            <input type="text" id="player_name" placeholder="e.g., Marcus Rashford" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="coach_name">Coach's Name</label>
+                            <input type="text" id="coach_name" placeholder="e.g., Erik ten Hag">
+                        </div>
+                    </div>
+
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label for="player_team">Player's Team / Club</label>
+                            <input type="text" id="player_team" placeholder="e.g., Manchester United">
+                        </div>
+                        <div class="form-group">
+                            <label for="sub_team">Sub-Team / Age Group</label>
+                            <input type="text" id="sub_team" placeholder="e.g., U21, Reserves, First Team">
+                        </div>
+                    </div>
+
+                    <div class="form-grid-4">
+                        <div class="form-group">
+                            <label for="jersey_number">Jersey Number</label>
+                            <input type="number" id="jersey_number" min="1" max="99" placeholder="10">
+                        </div>
+                        <div class="form-group">
+                            <label for="position">Position</label>
+                            <input type="text" id="position" placeholder="e.g., LW">
+                        </div>
+                        <div class="form-group">
+                            <label for="height">Height (cm)</label>
+                            <input type="number" id="height" step="0.1" min="100" placeholder="183">
+                        </div>
+                        <div class="form-group">
+                            <label for="weight">Weight (kg)</label>
+                            <input type="number" id="weight" step="0.1" min="30" placeholder="70">
+                        </div>
+                    </div>
+
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label for="dob">Date of Birth</label>
+                            <input type="date" id="dob">
+                        </div>
+                        <div class="form-group">
+                            <label for="preferred_foot">Preferred Foot</label>
+                            <select id="preferred_foot">
+                                <option value="Right">Right</option>
+                                <option value="Left">Left</option>
+                                <option value="Both">Both</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="primary_positions">Primary Position(s) Played</label>
+                        <input type="text" id="primary_positions" placeholder="e.g., LW, CAM, ST">
+                    </div>
+
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label for="report_period_start">Report Period — Start Date</label>
+                            <input type="date" id="report_period_start">
+                        </div>
+                        <div class="form-group">
+                            <label for="report_period_end">Report Period — End Date</label>
+                            <input type="date" id="report_period_end">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="matches_covered">Matches Covered (Brief List)</label>
+                        <textarea id="matches_covered" rows="3" placeholder="e.g., vs. Arsenal (W 2-1), vs. Chelsea (D 1-1), vs. Liverpool (L 0-2)"></textarea>
+                    </div>
+                </div>
+
+                <!-- Section 2: Performance Snapshot -->
+                <div class="form-card">
+                    <h2><span class="section-icon">📊</span> Performance Snapshot (Objective Data)</h2>
+                    <div class="form-grid-4">
+                        <div class="form-group">
+                            <label for="matches_played">Matches Played</label>
+                            <input type="number" id="matches_played" min="0" placeholder="12">
+                        </div>
+                        <div class="form-group">
+                            <label for="total_minutes_played">Total Minutes</label>
+                            <input type="number" id="total_minutes_played" min="0" placeholder="980">
+                        </div>
+                        <div class="form-group">
+                            <label for="goals">Goals</label>
+                            <input type="number" id="goals" min="0" placeholder="7">
+                        </div>
+                        <div class="form-group">
+                            <label for="assists">Assists</label>
+                            <input type="number" id="assists" min="0" placeholder="4">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 3: 4-Corner Assessment -->
+                <div class="form-card">
+                    <h2><span class="section-icon">🔵</span> 4-Corner Player Assessment</h2>
+
+                    <div class="form-group">
+                        <label for="technical_tactical_notes">Technical / Tactical Notes</label>
+                        <textarea id="technical_tactical_notes" rows="5" placeholder="Assessment of ball control, passing, shooting, dribbling, positional play, decision-making, off-the-ball movement, pressing, etc."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="physical_notes">Physical Notes</label>
+                        <textarea id="physical_notes" rows="5" placeholder="Assessment of speed, agility, strength, stamina, endurance, recovery time, injury status, physical development."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="psychological_notes">Psychological Notes</label>
+                        <textarea id="psychological_notes" rows="5" placeholder="Assessment of focus, motivation, confidence, composure under pressure, resilience, discipline, leadership qualities."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="social_notes">Social Notes</label>
+                        <textarea id="social_notes" rows="5" placeholder="Assessment of communication, teamwork, coachability, interaction with teammates and staff, behaviour."></textarea>
+                    </div>
+                </div>
+
+                <!-- Section 4: Development Plan -->
+                <div class="form-card">
+                    <h2><span class="section-icon">📋</span> Development Summary &amp; Action Plan</h2>
+
+                    <div class="form-group">
+                        <label for="overall_performance_summary">Overall Performance Summary</label>
+                        <textarea id="overall_performance_summary" rows="4" placeholder="Comprehensive summary of the player's overall performance during this reporting period."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="key_strengths_exhibited">Key Strengths Exhibited</label>
+                        <textarea id="key_strengths_exhibited" rows="4" placeholder="Specific areas and moments where the player clearly excelled."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="primary_areas_development">Primary Areas for Development</label>
+                        <textarea id="primary_areas_development" rows="4" placeholder="Key aspects the player needs to focus on improving."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="recommended_action_plan">Recommended Action Plan / Drills</label>
+                        <textarea id="recommended_action_plan" rows="4" placeholder="Specific drills, training focuses, and action steps for the next period."></textarea>
+                    </div>
+                </div>
+
+                <!-- Section 5: Club Logo -->
+                <div class="form-card">
+                    <h2><span class="section-icon">🏅</span> Club Logo (Optional)</h2>
+                    <div class="form-group">
+                        <label for="club_logo">Upload Club Logo (PNG / JPG)</label>
+                        <input type="file" id="club_logo" accept="image/png, image/jpeg, image/jpg">
+                        <small>The logo will appear in the PDF report header. Recommended: transparent PNG, square format.</small>
+                    </div>
+                    <div id="logo-preview-wrap">
+                        <img id="logo-preview" src="" alt="Logo Preview">
+                        <span style="font-size:0.85rem;color:var(--text-muted)">Logo preview</span>
+                    </div>
+                </div>
+
+                <div class="button-group" style="padding-bottom:2rem">
+                    <a href="index.html" class="btn btn-secondary">← Back</a>
+                    <button type="submit" class="btn btn-primary btn-lg" id="generateBtn">
+                        ⬇ Generate PDF Report
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- jsPDF + AutoTable -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+    <script src="pdf-utils.js"></script>
+    <script src="player-pdf.js"></script>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match Analysis Report — SmartPitch</title>
+    <meta name="description" content="Generate a professional match analysis PDF report with tactical breakdowns.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <a href="index.html" class="header-brand">
+            <img src="smartpitch-logo.jpg" alt="SmartPitch" style="width:26px;height:26px;object-fit:contain;border-radius:4px;">
+            <span>SmartPitch</span>
+        </a>
+        <nav class="header-nav">
+            <a href="index.html">Home</a>
+            <a href="player-report.html">Player Report</a>
+            <a href="match-report.html" class="active">Match Report</a>
+        </nav>
+    </header>
+
+    <!-- Loading Overlay -->
+    <div class="generating-overlay" id="loadingOverlay">
+        <div class="generating-box">
+            <div class="spinner"></div>
+            <h3>Generating Your Report</h3>
+            <p>Building your professional PDF, please wait...</p>
+        </div>
+    </div>
+
+    <main class="report-main">
+        <div class="report-container">
+            <h1 class="page-title">Match Analysis Report</h1>
+            <p class="page-subtitle">Fill in the match details below. Click Generate to instantly download a professional PDF.</p>
+
+            <form id="matchForm" novalidate>
+
+                <!-- Section 1: Match Details -->
+                <div class="form-card">
+                    <h2><span class="section-icon">📅</span> Match Details</h2>
+
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label for="competition">Competition</label>
+                            <select id="competition">
+                                <option value="">Select Competition</option>
+                                <option value="League">League</option>
+                                <option value="Cup">Cup</option>
+                                <option value="Friendly">Friendly</option>
+                                <option value="Tournament">Tournament</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="season">Season</label>
+                            <input type="text" id="season" placeholder="e.g., 2025/2026">
+                        </div>
+                    </div>
+
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label for="match_date">Match Date <span style="color:#EF4444">*</span></label>
+                            <input type="date" id="match_date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="venue">Venue</label>
+                            <input type="text" id="venue" placeholder="e.g., Old Trafford, London">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="weather_pitch_conditions">Weather / Pitch Conditions (Optional)</label>
+                        <textarea id="weather_pitch_conditions" rows="2" placeholder="e.g., Overcast, dry pitch with good surface conditions."></textarea>
+                    </div>
+
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label for="home_team">Home Team Name <span style="color:#EF4444">*</span></label>
+                            <input type="text" id="home_team" placeholder="e.g., Manchester United" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="away_team">Away Team Name <span style="color:#EF4444">*</span></label>
+                            <input type="text" id="away_team" placeholder="e.g., Liverpool FC" required>
+                        </div>
+                    </div>
+
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label for="final_score_home">Final Score — Home</label>
+                            <input type="number" id="final_score_home" min="0" placeholder="2">
+                        </div>
+                        <div class="form-group">
+                            <label for="final_score_away">Final Score — Away</label>
+                            <input type="number" id="final_score_away" min="0" placeholder="1">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 2: Team Setup -->
+                <div class="form-card">
+                    <h2><span class="section-icon">🗂️</span> Team &amp; Player Setup</h2>
+
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label for="home_formation_initial">Home Team Formation</label>
+                            <select id="home_formation_initial">
+                                <option value="">Select Formation</option>
+                                <option value="4-3-3">4-3-3</option>
+                                <option value="4-4-2">4-4-2</option>
+                                <option value="3-5-2">3-5-2</option>
+                                <option value="4-2-3-1">4-2-3-1</option>
+                                <option value="5-3-2">5-3-2</option>
+                                <option value="4-5-1">4-5-1</option>
+                                <option value="3-4-3">3-4-3</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="away_formation_initial">Away Team Formation</label>
+                            <select id="away_formation_initial">
+                                <option value="">Select Formation</option>
+                                <option value="4-3-3">4-3-3</option>
+                                <option value="4-4-2">4-4-2</option>
+                                <option value="3-5-2">3-5-2</option>
+                                <option value="4-2-3-1">4-2-3-1</option>
+                                <option value="5-3-2">5-3-2</option>
+                                <option value="4-5-1">4-5-1</option>
+                                <option value="3-4-3">3-4-3</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="home_lineup_notes">Home Team Lineup Notes</label>
+                        <textarea id="home_lineup_notes" rows="4" placeholder="List starters, key substitutions, and notable tactical roles for the home team."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="away_lineup_notes">Away Team Lineup Notes</label>
+                        <textarea id="away_lineup_notes" rows="4" placeholder="List starters, key substitutions, and notable tactical roles for the away team."></textarea>
+                    </div>
+                </div>
+
+                <!-- Section 3: Tactical Analysis -->
+                <div class="form-card">
+                    <h2><span class="section-icon">📐</span> Deep Tactical Analysis</h2>
+
+                    <h3>🏠 Home Team Tactical Breakdown</h3>
+                    <div class="form-group">
+                        <label for="home_attacking_phase">Attacking Phase (In Possession)</label>
+                        <textarea id="home_attacking_phase" rows="4" placeholder="How did the home team build up play, create chances, and attack? Width, central play, pressing triggers, final third entries."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="home_defensive_phase">Defensive Phase (Out of Possession)</label>
+                        <textarea id="home_defensive_phase" rows="4" placeholder="How did the home team defend? High press, mid-block, low block? Compactness, press triggers, defensive errors."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="home_key_transitions">Key Transitions</label>
+                        <textarea id="home_key_transitions" rows="4" placeholder="How did the home team transition between attack and defence? Counter-pressing, direct counters, positional resets."></textarea>
+                    </div>
+
+                    <h3>✈️ Away Team Tactical Breakdown</h3>
+                    <div class="form-group">
+                        <label for="away_attacking_phase">Attacking Phase (In Possession)</label>
+                        <textarea id="away_attacking_phase" rows="4" placeholder="How did the away team build up play, create chances, and attack?"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="away_defensive_phase">Defensive Phase (Out of Possession)</label>
+                        <textarea id="away_defensive_phase" rows="4" placeholder="How did the away team defend? Shape, press, block?"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="away_key_transitions">Key Transitions</label>
+                        <textarea id="away_key_transitions" rows="4" placeholder="How did the away team transition between attack and defence?"></textarea>
+                    </div>
+                </div>
+
+                <!-- Section 4: Summary -->
+                <div class="form-card">
+                    <h2><span class="section-icon">📝</span> Conclusive Summary</h2>
+
+                    <div class="form-group">
+                        <label for="overall_match_summary">Overall Match Summary</label>
+                        <textarea id="overall_match_summary" rows="4" placeholder="A comprehensive narrative summary of the match flow, key periods, and final result."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="key_turning_points">Key Turning Point(s)</label>
+                        <textarea id="key_turning_points" rows="4" placeholder="Crucial moments, decisions, substitutions, or incidents that changed the game's trajectory."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="man_of_the_match">Man of the Match</label>
+                        <input type="text" id="man_of_the_match" placeholder="e.g., Bruno Fernandes (Home) — Dominant in midfield, 1G 2A">
+                    </div>
+                    <div class="form-group">
+                        <label for="final_analyst_notes">Final Analyst Notes</label>
+                        <textarea id="final_analyst_notes" rows="4" placeholder="Additional insights, future considerations, coaching recommendations, or scouting notes."></textarea>
+                    </div>
+                </div>
+
+                <!-- Section 5: Club Logo -->
+                <div class="form-card">
+                    <h2><span class="section-icon">🏅</span> Club Logo (Optional)</h2>
+                    <div class="form-group">
+                        <label for="club_logo">Upload Club Logo (PNG / JPG)</label>
+                        <input type="file" id="club_logo" accept="image/png, image/jpeg, image/jpg">
+                        <small>The logo will appear in the PDF report header. Recommended: transparent PNG, square format.</small>
+                    </div>
+                    <div id="logo-preview-wrap">
+                        <img id="logo-preview" src="" alt="Logo Preview">
+                        <span style="font-size:0.85rem;color:var(--text-muted)">Logo preview</span>
+                    </div>
+                </div>
+
+                <div class="button-group" style="padding-bottom:2rem">
+                    <a href="index.html" class="btn btn-secondary">← Back</a>
+                    <button type="submit" class="btn btn-primary btn-lg" id="generateBtn">
+                        ⬇ Generate PDF Report
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- jsPDF + AutoTable -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+    <script src="pdf-utils.js"></script>
+    <script src="match-pdf.js"></script>
+</body>
+</html>
