@@ -11,7 +11,7 @@
   var STORAGE_KEY = 'sp_pro_license_v1';
   var EXPIRY_MS   = 7 * 24 * 60 * 60 * 1000; // 7 days
   var VERIFY_URL  = '/api/verify-license';
-  var PRO_URL     = 'https://chopra203.github.io/portfolio/pro-tour.html';
+  var PRO_URL     = 'https://www.shivamchopra.com/pro-tour.html';
 
   /* ── Storage helpers ─────────────────────────────────── */
   function getStored() {
